@@ -37,12 +37,12 @@ Before actually planning my approach I just kicked the tires a bit and made a **
    - **Usually:**
      - made by manufacturers not included in products
 
-I then mapped the relationships between listing's and product's key/value pairs. From there I just started writing out basic `if` statements and testing results, usually printing a group of listings with loose relationships to products and seeing if it matched listings that my method had not caught: e.g. printing any listing containing the product's manufacturer and the first two digits of the model and making sure I hadn't missed any. I will be the first to admit this was probably not the most elegant way to work through it, but I planned based on what I could do with Python.
+I then mapped the relationships between listing's and product's key/value pairs. From there I just started writing out basic `if` statements and testing results, usually printing a group of listings with loose relationships to products and seeing if it matched listings that my method had not caught: e.g. printing any listing containing the product's manufacturer and the first two digits of the model and making sure I hadn't missed any. I will be the first to admit this was probably not the most elegant way to work through it, but I planned based on my inexperience with Python.
 After refining my approach down a bit I then tested product listings for duplicates and added in a few lines to prevent them (see below).
 Below is a flow chart that more or less demonstrates my approach to generating matches.
 ![Optional Text](../master/sortable_flow.png)
-Speed was my biggest challenge. I tried to mitigate speed issues by using some of Python docs' suggestion (e.g. using local over global variables, avoiding nested functions, etc). I also filtered `listings` starting with less laborious `if` statements and incorporated the more taxing ones once other possibilities had been eliminated. I also included a step that removed all listings that have been added to a `results` hash from the array of searchable listings, which both avoided duplicates and made the search for products progressively faster. I also originally used a `while` loop for the products, but switched to `for`, which reduced the time by about 67%.  
-I was initially worried about memory, but after some research I discovered that Python's garbage collection is pretty conducive to my approach and would probably cover me. More specifically, because Products that have been checked already are dictionaries (i.e. mutable objects), Python can let them go once they are no longer referenced.
+Speed was my biggest challenge. I tried to mitigate speed issues by using some of Python docs' suggestion (e.g. using local over global variables, avoiding nested functions that generate undue overhead, etc). I also filtered `listings` starting with less laborious `if` statements and incorporated the more taxing ones once other possibilities had been eliminated. I also included a step that removed all listings that have been added to a `results` hash from the array of searchable listings, which both avoided duplicates and made the search for products progressively faster. I also originally used a `while` loop for the products, but switched to `for`, which reduced the time by about 67%.  
+I was initially worried about memory, but after some research I discovered that Python's garbage collection is pretty conducive to my approach and would probably cover me. More specifically, because Products that have been checked already are dictionaries (i.e. mutable objects), Python can let them go once they are no longer referenced. I did read 
 At any rate, I certainly could have refactored more, but I kept the `if` statements for a two important reasons:
 1. They give the code an "under-the-hood" kind of readability.
 2. Python can evaluate an `if` statement faster than it can call/execute a function, generally speaking.
@@ -50,16 +50,16 @@ At any rate, I certainly could have refactored more, but I kept the `if` stateme
 #### Problems/Solutions:
 Solved = [x]
 There were a lot of ways that false matches could be generated, solvable with varying degrees of ease. Here are a couple:
-[x] Listings with different model formatting than Product e.g. `Olympus vg120` vs. `Olympus vg-120`
+- [x] Listings with different model formatting than Product e.g. `Olympus vg120` vs. `Olympus vg-120`
     * Creating a function that split numbers and letters of model with a `-` with regex
-[x] Substring of `Camera A1` matches `Camera A123`
+- [x] Substring of `Camera A1` matches `Camera A123`
     * Simply adding a space to the end of the product_name, such that it would only match with Listing titles that were that substring (after the title was reformatted with spaces instead of `-`,`,` or `_`)
-[x] Model_name of Product was included in unrelated part `title` of `Listing` e.g. `model: 400` vs. `camera ABC ... 400 X 600`
+- [x] Model_name of Product was included in unrelated part `title` of `Listing` e.g. `model: 400` vs. `camera ABC ... 400 X 600`
     * Because this only occurred with model names that were just numbers--with the exception of 3 model names (`zoom`,`slice`,`tryx`) which I confirmed were matched correctly--if it was trying to generate a match using a `model` that was just digits, it would verify that that `model` was contained in the first 4 words of the `title`.
-[x] Listings that were only accessories slipping through the cracks
+- [x] Listings that were only accessories slipping through the cracks
     * Some listings that were _only_ accessories were actually made by the same manufacturers as the Products, so I wrote crude but effective function. It searches those accessories, checking whether they had some of the characteristics that kits have but just accessories don't and filtered them out accordingly (e.g. `+`,which are only in listings that are kits; `mm`, which are only listed with lenses; `with`, which is the same case as `+`)
-[x] Duplicates: I created a test to identify duplicates before finishing, of which there were a few.
-[ ] Efficiency: It's possible my method of creating an array of listings to iterate over is the most efficient way of doing things. It was just an easy way to prevent duplicates and give the method a 25% speed boost. Because I'm new to Python, my attempts to use set() instead, was fruitless.
+- [x] Duplicates: I created a test to identify duplicates before finishing, of which there were a few.
+- [ ] Efficiency: It's possible my method of creating an array of listings to iterate over is the most efficient way of doing things. It was just an easy way to prevent duplicates and give the method a 25% speed boost. In retrospect, a set() probably would've been a better choice.
 ##### Improvements:
 It would be fun to try and incorporate some of the other info given in the products/listings to sort them. For example, the likelihood that a product has a listing with certain identifiers changes based on the `announced-date` of the product. For example, until a few years ago, high-end cameras usually used CF cards and others used SD cards.
-I don't really have anything in the way of experience with sorting algorithms, but I'm sure with a basic introduction to them I could figure out a better way to do this.
+I don't really have anything in the way of experience with sorting algorithms, but I'm sure with a basic introduction to them I could figure out a better way to do this. Moreover, there were some cool sorting modules that I wish I had known about when I started(e.g. `heapq`).

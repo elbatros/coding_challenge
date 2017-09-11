@@ -1,3 +1,10 @@
+#import json
+#short_list = []
+#listings_file = open("listings.txt","r", encoding="utf-8")
+#for line in listings_file:
+#    short_obj = json.loads(line)
+#    short_list.append(short_obj["title"])
+#   
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
@@ -49,7 +56,7 @@ def mixed_form(prod_model):
     else:
         return False
 #==============================================================================
-# Wrapping everything in a function so variables are local and not global
+# Creating function to maximize local variables.
 #==============================================================================
 def sort():
 #==============================================================================
@@ -78,10 +85,10 @@ def sort():
 #                 If Product's manufacturer is in Listings, generate variables and move to next
 #               "if" statement. Uses "in" over "==" because of cases like "kodak" vs. "kodakstock account"
 #==============================================================================
-            if line_dict["manufacturer"].lower() in listing_obj["manufacturer"].lower():
-                prod_model = " " + line_dict["model"].lower().replace("-"," ") + " "
+            if line_dict.get("manufacturer").lower() in listing_obj["manufacturer"].lower():
+                prod_model = " " + line_dict.get("model").lower().replace("-"," ") + " "
                 listing_title = listing_obj["title"].lower().replace("-"," ").replace(","," ")
-                prod_name = line_dict["product_name"].replace("_"," ").replace("-"," ").lower() + " "
+                prod_name = line_dict.get("product_name").replace("_"," ").replace("-"," ").lower() + " "
                 if camera_check(listing_obj) is True:
 #==============================================================================
 #                 If product_name(reformatted) is in Listing's "title," append 
@@ -132,9 +139,9 @@ def sort():
             del short_list[short_list.index(items)]
         if len(listings) > 0:
             final = json.dumps({'product_name':line_dict.get("product_name"),'listings':listings})
-#            print(final + "=========================================")
-            file = open("results.txt","a", encoding="utf-8")
-            file.write(final + "\n")
+            print(final + "=========================================")
+#            file = open("resultsLAST.txt","a", encoding="utf-8")
+#            file.write(final + "\n")
     listings_file.close()
     print(len(short_list))
 start_time = time.time()    
