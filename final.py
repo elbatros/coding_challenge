@@ -132,11 +132,9 @@ def sort():
             del short_list[short_list.index(items)]
         if len(listings) > 0:
             final = json.dumps({'product_name':line_dict.get("product_name"),'listings':listings})
-#            print(final + "=========================================")
             file = open("results.txt","a", encoding="utf-8")
             file.write(final + "\n")
     listings_file.close()
-    print(len(short_list))
-start_time = time.time()    
+#start_time = time.time()    
 sort()
-print("----- %s seconds ----" % (time.time() - start_time))      
+#print("----- %s seconds ----" % (time.time() - start_time))      

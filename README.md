@@ -1,8 +1,8 @@
 ## Coding Challenge - Python 3.6
 ### Fork repo. With `listings.txt` and `products.txt` in same directory as `final.py`: `python final.py`
-##### About Me:
-Since brevity is ~~the soul of~~ wit, I will keep this short and sweet. I have always been a problem solver. I spend all my free time tinkering and learning about how stuff works. Whether it's getting my hands dirty repairing my bike or hours of keyboard clacking to fix a bug, I always relish the opportunity to problem solve because I know I will finish that much more prepared for the next problem.
-I have a post-graduate education, but not one in math, engineering or computer science. However, I am capable of the kind of thinking those fields require. At the very least, when I explore a new field or subject--and its respective challenges and problems--I invariably learn to excel because I ask questions, I get peer's input and I have fun with it.
+<!-- ##### About Me: -->
+<!-- Since brevity is ~~the soul of~~ wit, I will keep this short and sweet. I have always been a problem solver. I spend all my free time tinkering and learning about how stuff works. Whether it's getting my hands dirty repairing my bike or hours of keyboard clacking to fix a bug, I always relish the opportunity to problem solve because I know I will finish that much more prepared for the next problem.
+I have a post-graduate education, but not one in math, engineering or computer science. However, I am capable of the kind of thinking those fields require. At the very least, when I explore a new field or subject--and its respective challenges and problems--I invariably learn to excel because I ask questions, I get peer's input and I have fun with it. -->
 <!-- from approaching table to reading blog
 inc knowledge of cameras like  camera_check -->
 <!-- I have always been a problem solver. In som
@@ -20,7 +20,7 @@ When I learned how to drive I became fascinated with all its elements and eventu
 I don't have a math, computer science or engineering degree. I don't see that
 I'm sure there are much more elegant solutions to this problem, but if anything my being able to solve this with a limited knowledge of Python speaks to my ability to really -->
 ##### Process/Approach:
-My experience with Python before this challenge was limited to 4-5 hours a couple months ago, so I was going to try and keep things simple. It may have been wiser to use a language I was comfortable with, but I had been looking for an excuse to get some Python practice and I thought if ever there was a time to do it, it was while completing a coding challenge for a company that uses it.
+My experience with Python before this challenge was limited to 4-5 hours a couple months ago, so I was going to have to keep things simple. It may have been wiser to use a language I was comfortable with, but I had been looking for an excuse to get some Python practice and I thought if ever there was a time to do it, it was while completing a coding challenge for a company that uses it.
 Before actually planning my approach I just kicked the tires a bit and made a **rough** list of the 3 categories of listings and their unique and/or possibly problematic  characteristics:
 1. Camera with Accessories:
    - **Could:**
@@ -42,7 +42,7 @@ After refining my approach down a bit I then tested product listings for duplica
 Below is a flow chart that more or less demonstrates my approach to generating matches.
 ![Optional Text](../master/sortable_flow.png)
 Speed was my biggest challenge. I tried to mitigate speed issues by using some of Python docs' suggestion (e.g. using local over global variables, avoiding nested functions that generate undue overhead, etc). I also filtered `listings` starting with less laborious `if` statements and incorporated the more taxing ones once other possibilities had been eliminated. I also included a step that removed all listings that have been added to a `results` hash from the array of searchable listings, which both avoided duplicates and made the search for products progressively faster. I also originally used a `while` loop for the products, but switched to `for`, which reduced the time by about 67%.  
-I was initially worried about memory, but after some research I discovered that Python's garbage collection is pretty conducive to my approach and would probably cover me. More specifically, because Products that have been checked already are dictionaries (i.e. mutable objects), Python can let them go once they are no longer referenced. I did read 
+I was initially worried about memory, but after some research I discovered that Python's garbage collection is pretty conducive to my approach and would probably cover me. More specifically, because Products that have been checked already are dictionaries (i.e. mutable objects), Python can let them go once they are no longer referenced. I did read
 At any rate, I certainly could have refactored more, but I kept the `if` statements for a two important reasons:
 1. They give the code an "under-the-hood" kind of readability.
 2. Python can evaluate an `if` statement faster than it can call/execute a function, generally speaking.
