@@ -124,9 +124,15 @@ def sort():
             del short_list[short_list.index(items)]
         if len(listings) > 0:
             final = json.dumps({'product_name':line_dict.get("product_name"),'listings':listings})
+#==============================================================================
+#       I would have used seek() here, but it doesn't appear to be nearly as useful 
+#with "append"
+#==============================================================================
             file = open("results.txt","a", encoding="utf-8")
             file.write(final + "\n")
-    listings_file.close()
-#start_time = time.time()    
+            file.close()
+#start_time = time.time()
+print("Sorting...")    
 sort()
+print("Complete!")
 #print("----- %s seconds ----" % (time.time() - start_time))      
